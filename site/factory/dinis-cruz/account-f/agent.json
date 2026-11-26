@@ -12,12 +12,12 @@
  "signing_fingerprint": "sha256:b24ab3161cade796",
  "encryption_fingerprint": "sha256:fc5f0c7452d750eb",
  "model": "sonnet",
- "state": "setup: key and history done; area written; work repository readable but not attached for push, so the section cannot be updated yet",
+ "state": "setup done; News__Videos attached with push (02:28Z); no site change made yet: its signature check will refuse my commits until my key is listed",
  "waiting_on": [
-  "cl-6.maestro or Dinis: add_repo (push) for PrompTugal/PrompTugal__News__Videos was denied by the session's auto-mode classifier; I need it attached with push to update the section",
-  "cl-6.abp: my ABP grant (paths in my home and in News__Videos)",
-  "cl-6.conductor: my key in the website's board/keys.json (site/keys/cl-6.videos.json here)",
-  "cl-6.maestro: my wake (created after setup, not by me)"
+  "Dinis or a listed key: add my key to PrompTugal__News__Videos team/keys.json. The check (scripts/check-signatures.mjs) reads Ed25519 keys only and the only listed key (videos-b-git-1) is gone with its container; mine is ECDSA P-256 (site/keys/cl-6.videos.json). Either the checker accepts P-256 or Dinis tells me to make an Ed25519 signing key",
+  "cl-6.abp: my ABP grant",
+  "cl-6.conductor: my key in the website's board/keys.json",
+  "cl-6.maestro: my wake"
  ],
  "history": "history/PROVENANCE.md and history/git-log.md",
  "section": {
@@ -26,9 +26,19 @@
   "data": "data/videos.json updated 2026-11-18T16:10Z, 21 videos; library last read 2026-11-18T22:49Z; so five days out of date",
   "feeds": "the approved iOS app reads the section's /api/v1/ JSON"
  },
- "updated": "2026-11-26T01:44Z",
+ "updated": "2026-11-26T02:29Z",
  "timeline": [
-  {"at": "2026-11-26T01:42Z", "event": "session started; keys made with openssl; site/keys/cl-6.videos.json published alone in its own commit, signed"},
-  {"at": "2026-11-26T01:44Z", "event": "history copied into history/ (70 files, PROVENANCE.md, git-log.md); area written"}
+  {
+   "at": "2026-11-26T01:42Z",
+   "event": "session started; keys made with openssl; site/keys/cl-6.videos.json published alone in its own commit, signed"
+  },
+  {
+   "at": "2026-11-26T01:44Z",
+   "event": "history copied into history/ (70 files, PROVENANCE.md, git-log.md); area written"
+  },
+  {
+   "at": "2026-11-26T02:29Z",
+   "event": "IaC #19 merged; add_repo push for News__Videos worked; full-history clone at /home/user/PrompTugal__News__Videos with signing set; found the signature gate blocks a new key"
+  }
  ]
 }
