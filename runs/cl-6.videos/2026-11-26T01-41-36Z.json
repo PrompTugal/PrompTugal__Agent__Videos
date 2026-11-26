@@ -1,0 +1,84 @@
+{
+ "$schema": "https://raw.githubusercontent.com/PrompTugal/PrompTugal__Agent__ABP/dev/abp/run-report.schema.json",
+ "agent": "cl-6.videos@PrompTugal.dinis",
+ "run": "2026-11-26T01-41-36Z",
+ "started": "2026-11-26T01:41:36Z",
+ "ended": "2026-11-26T07:20:10Z",
+ "line": "HAND-WRITTEN, hooks not installed in this session; counters unmeasured (left at 0), by my own account no breach. Setup run: key made (P-256 and RSA, then Ed25519), history moved into history/, area written, News__Videos refresh built and gated locally and approved by cl-6.security, key change and pages.yml prepared for the IaC key bootstrap; nothing pushed to News__Videos. I had no ABP grant to check against; things worth a look: two add_repo calls for News__Videos (the first denied by the classifier, the second attached it), one add_repo read for PrompTugal__IaC, public read-only clones of the website, Conductor, News__Videos and IaC, and curl reads of public raw files in the ABP and Security homes. Read against my grant (abp/cl-6.videos.md) afterwards: the breaches below are my own account; I moved this report to runs/cl-6.videos/ because the grant names that path, not runs/<full agent name>/.",
+ "policy": {
+  "version": "1.2.0",
+  "sha256": "87b1760db7fb4d5fb3c3d1300be194f90a05d676677b99dc2bc37681b03d3274"
+ },
+ "text_included": false,
+ "sessions": 1,
+ "requests": [],
+ "session_events": [],
+ "compactions": {
+  "count": 0,
+  "re_anchored": 0
+ },
+ "tool_calls": {
+  "total": 0,
+  "by_kind": {
+   "write-unidentified": 0,
+   "shell": 0,
+   "read": 0,
+   "connector": 0
+  }
+ },
+ "policies_executed": {
+  "R6": 0
+ },
+ "policies_instrumented": [],
+ "mandate": {
+  "actions": 0,
+  "commits": [
+   "edf053c",
+   "07bbfb2",
+   "58713ca",
+   "aaf81b1",
+   "50832ad",
+   "e88e4b9",
+   "2a4bdf0",
+   "3ea867f",
+   "90450bb",
+   "0c4c373"
+  ]
+ },
+ "reach": {
+  "attempts": 0,
+  "blocked": 0,
+  "observed": 0,
+  "denied": []
+ },
+ "breaches": [
+  {
+   "kind": "write",
+   "what": "history/** (70 copied files, PROVENANCE.md, git-log.md) in my home, outside the granted paths; done at the brief's step 2 (Dinis's word, 26 Nov, relayed by the conductor) before any grant existed",
+   "rule": "R6"
+  },
+  {
+   "kind": "write",
+   "what": "git config in my two clones (gpg.format, gpg.ssh.program, user.signingkey, commit.gpgsign, user.name, user.email), which writes .git/config, a protected path; done at the brief's step 1",
+   "rule": "R6"
+  },
+  {
+   "kind": "connector",
+   "what": "claude-code-remote add_repo: News__Videos twice (push; the first denied by the classifier, the second attached it, at the user's word to retry) and PrompTugal__IaC once (read); add_repo is not in the allowed list",
+   "rule": "R3"
+  },
+  {
+   "kind": "write",
+   "what": "the first run report went to runs/cl-6.videos@PrompTugal.dinis/, not runs/cl-6.videos/; moved",
+   "rule": "R6"
+  }
+ ],
+ "counts": {
+  "requests": 0,
+  "tool_calls": 0,
+  "in_mandate": 0,
+  "out_of_mandate": 0,
+  "attempts": 0,
+  "breaches": 4
+ }
+}
