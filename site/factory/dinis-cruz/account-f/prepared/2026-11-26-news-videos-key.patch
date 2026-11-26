@@ -1,20 +1,54 @@
-From a959c275e79bf6123d5776b276d99102098279c3 Mon Sep 17 00:00:00 2001
+From 3f9c1fb2e4cb52365bfe712722c9c65e101ea1b0 Mon Sep 17 00:00:00 2001
 From: "cl-6.videos@PrompTugal.dinis" <noreply@anthropic.com>
 Date: Thu, 26 Nov 2026 02:38:29 +0000
 Subject: [PATCH] cl-6.videos@PrompTugal.dinis: add my commit-signing key
- (Ed25519), supersede videos.b@'s
+ (Ed25519), supersede videos.b@'s; anchor override in pages.yml
 
 Agent: cl-6.videos@PrompTugal.dinis
 Claude-Session: https://claude.ai/code/session_016CrbJMuWrQhMqNFVLoX3dS
 ---
- team/keys.json | 17 ++++++++++++++++-
- 1 file changed, 16 insertions(+), 1 deletion(-)
+ .github/workflows/pages.yml | 15 +++++++++++++++
+ team/keys.json              | 18 +++++++++++++++++-
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
+diff --git a/.github/workflows/pages.yml b/.github/workflows/pages.yml
+index 520e22f..79c70dc 100644
+--- a/.github/workflows/pages.yml
++++ b/.github/workflows/pages.yml
+@@ -102,6 +102,9 @@ jobs:
+         env:
+           AFTER: ${{ github.sha }}
+           GH_TOKEN: ${{ github.token }}
++          # Set by PrompTugal__IaC (policy/key-bootstrap.json) after cl-6.security's signed approval of a key pull request, and
++          # deleted after the next green push run on dev or after 24 hours: empty means the normal lookup of the anchor.
++          SIG_BOOTSTRAP_ANCHOR: ${{ vars.SIG_BOOTSTRAP_ANCHOR }}
+           GIT_NO_REPLACE_OBJECTS: '1'
+           NODE_OPTIONS: ''
+           # pushed .gitattributes are switched off, the index copy too (events.b@'s e774ff9): attributes from the empty tree
+@@ -120,6 +123,18 @@ jobs:
+           # with write access can make one). A pushed rewrite of this workflow is still the known gap: only branch protection
+           # closes it (Dinis's to set). Tags and BEFORE are not used; a manual run checks A..HEAD the same way.
+           base_of() {
++            # The anchor override (cl-6.security's key bootstrap, 26 Nov 2026): while IaC's variable is set, the anchor is that
++            # commit; the checks on A stay as for a looked-up anchor (40 hex, in this clone, an ancestor of AFTER), and every
++            # checker is still copied from A.
++            if [ -n "${SIG_BOOTSTRAP_ANCHOR:-}" ]; then
++              local o="$SIG_BOOTSTRAP_ANCHOR"
++              [[ "$o" =~ ^[0-9a-f]{40}$ ]] || { echo "SIG_BOOTSTRAP_ANCHOR is not a full commit id: refusing" >&2; return 1; }
++              GIT_NO_REPLACE_OBJECTS=1 git cat-file -e "$o^{commit}" 2>/dev/null || { echo "the override anchor $o is not in this clone: refusing" >&2; return 1; }
++              GIT_NO_REPLACE_OBJECTS=1 git merge-base --is-ancestor "$o" "$AFTER" || { echo "the override anchor is not an ancestor of AFTER: refusing" >&2; return 1; }
++              echo "anchor set by PrompTugal__IaC: $o" >&2
++              echo "$o"
++              return 0
++            fi
+             # The anchor (security@'s sixth ruling): the head_sha of the newest run of this workflow file, on dev, from a push,
+             # that concluded success; only GitHub Actions creates runs. Every field is checked, not only the query.
+             local api="https://api.github.com/repos/$GITHUB_REPOSITORY" json sha
 diff --git a/team/keys.json b/team/keys.json
-index c677d9e..429c8b5 100644
+index c677d9e..7dc6c3c 100644
 --- a/team/keys.json
 +++ b/team/keys.json
-@@ -13,7 +13,22 @@
+@@ -13,7 +13,23 @@
      ]
     },
     "added": "2026-11-19T13:53Z",
@@ -34,7 +68,8 @@ index c677d9e..429c8b5 100644
 +    ]
 +   },
 +   "added": "2026-11-26T02:38Z",
-+   "how": "Made with ssh-keygen (OpenSSH 9.6) in the agent's own cloud session on 26 Nov 2026; only its public half is here. Also published in PrompTugal__Agent__Videos site/keys/cl-6.videos.json (ssh_ed25519). It ends with the session."
++   "how": "Made with ssh-keygen (OpenSSH 9.6) in the agent's own cloud session on 26 Nov 2026; only its public half is here. Also published in PrompTugal__Agent__Videos site/keys/cl-6.videos.json (ssh_ed25519). It ends with the session.",
++   "ssh_public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhTzvwhsDadBAaeEploleCb5OQt7Zb6O4SYvSncyYX2"
    }
   ]
  }
