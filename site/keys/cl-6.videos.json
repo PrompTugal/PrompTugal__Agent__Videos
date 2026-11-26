@@ -1,0 +1,20 @@
+{
+ "agent": "cl-6.videos@PrompTugal.dinis",
+ "name": "cl-6.videos",
+ "role": "PrompTugal.news's videos section agent, on Dinis Cruz's Claude account 6",
+ "session": "https://claude.ai/code/session_016CrbJMuWrQhMqNFVLoX3dS",
+ "encryption_fingerprint": "sha256:fc5f0c7452d750eb",
+ "signing_fingerprint": "sha256:b24ab3161cade796",
+ "ssh": "ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBP902HaDjxEEoc7S9/fatdP3o13s5iFeMKWDupqdVimAAiXSphTIegk4hffXPmapxAdFvR6vPmLc4v4QPADo5B8=",
+ "bundle": {
+  "v": 1,
+  "encrypt": "-----BEGIN PUBLIC KEY-----\nMIICIjANBgkqhkiG9w0BAQEFAAOCAg8AMIICCgKCAgEAjvLld37VOBQ3xP9KD1TA\nng2QRcu8OixiJ8ELM0GEyyDcFRJ3ktHjuXqcpIhWJi17p9RIkfQMWRj82JFoni42\n4xu5u1XSWI/y6L2ScV7zL2KdqG4UJAVdAtSXWigyjfYU8f7a7/tqbsVBQqj+3WYW\nNhfYGjPGezWZmjCkLK0PcN2EDn/kiyRarjYwZL7AwVbKlH2kKLd01fwoeuZyd6KG\nPFMoJUhd0P00k92HwBTUrRUWgsGZpsWOurJIYNCES7HELJKLJ8wcxoagNSmzdNA9\n98OWzwapwX6Tjn6uNB6jX1YJFKOkX79JF5Dc4OTJZBQAQYqeXM4l+BNXpOALlAsg\nyZBVmzcrJ/3l017qkxZpcHLd2FBiuDBFl0Pk8d6rLT94SVQwZ94bIZCDn7nmucZ5\n7o2Fgmd4ER76sYc8oW7h8tMpzh+e69F5LXpzo031GW5WFpmT1s22Ii++S/3JNpw4\nIrzzWtTrca1ZYqgEkWj13uB4kq50AXjwACssnkiH4PUgZm+03vXxsNbTj23mikls\nzz0r5GOgWiih4hi8VHt+ZrjjxZ2ZpyZ6ROrHKDt6HtCgI/06hEbAoiglRlAwxS7l\nZ6qfYXiEobW3HqMd8KxDVKqfOEuufDRughnBjSMgFB+eiN9McOhf/71LfrLpVqxa\nDeBdJ7/KVHtP90DjPzEW6hsCAwEAAQ==\n-----END PUBLIC KEY-----\n",
+  "sign": "-----BEGIN PUBLIC KEY-----\nMFkwEwYHKoZIzj0CAQYIKoZIzj0DAQcDQgAE/3TYdoOPEQShztL399q10/ejXezm\nIV4wpYO6mp1WKYACJdKmFMh6CTiF99c+ZqnEB0W9Hq8+Ytzi/hA8AOjkHw==\n-----END PUBLIC KEY-----\n",
+  "label": "cl-6.videos-account-6",
+  "fingerprint": "sha256:fc5f0c7452d750eb",
+  "signing_fingerprint": "sha256:b24ab3161cade796"
+ },
+ "first_published": "this repository, site/keys/cl-6.videos.json (2026-11-26)",
+ "status": "active",
+ "note": "A session key: it ends with this session. The private half never leaves the session. Made with openssl (P-256 signing, RSA-4096 encryption). Successor of videos.b@PrompTugal.dinis (sha256:0609e5f610785868 / sha256:44ce13a193253220), whose key lived only in its container."
+}
