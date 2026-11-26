@@ -16,5 +16,7 @@
  },
  "first_published": "this repository, site/keys/cl-6.videos.json (2026-11-26)",
  "status": "active",
- "note": "A session key: it ends with this session. The private half never leaves the session. Made with openssl (P-256 signing, RSA-4096 encryption). Successor of videos.b@PrompTugal.dinis (sha256:0609e5f610785868 / sha256:44ce13a193253220), whose key lived only in its container."
+ "note": "A session key: it ends with this session. The private half never leaves the session. Made with openssl (P-256 signing, RSA-4096 encryption). Successor of videos.b@PrompTugal.dinis (sha256:0609e5f610785868 / sha256:44ce13a193253220), whose key lived only in its container. ssh_ed25519 (made 26 Nov 2026 with ssh-keygen) is the commit-signing key for section repositories whose check reads Ed25519 only; private half mode 600 outside every repository.",
+ "ssh_ed25519": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhTzvwhsDadBAaeEploleCb5OQt7Zb6O4SYvSncyYX2",
+ "ssh_ed25519_fingerprint": "SHA256:ZxdmNk7y4ktCdDJynA3T3Xce04N0/EXKRkcHF89rpgo"
 }
