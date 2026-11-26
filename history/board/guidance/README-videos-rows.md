@@ -1,0 +1,8 @@
+# Guidance README: the rows that name videos
+
+Extracted from PrompTugal__News__Website board/guidance/README.md (last commit 9d17e2ead). Rows only; the file itself is the website's.
+
+| 19 Nov, 17:40 | **Cameras as links; the map**: MEO's 21 Algarve cameras back as credited links; SkylineWebcams as links for now; on videos, live and weather. Every site adds London, and the map is Portugal big with London and the EU (Brussels) small, where we have the data | `2026-11-19-cameras-as-links-and-the-map.md` |
+| 19 Nov, 01:05 | **Signed commits for every agent** (public key in the repo it maintains, every commit signed, its session named, checked in release.sh and CI; the pattern is cyber.b@'s c8fff24); **paid search stays with videos.b@** for now; **YouTube on promptugal.news only on a page that is never charged** (iframe player, a case study of the billing model; rights@ first) | `2026-11-19-signed-commits-paid-search-and-free-embeds.md` |
+| 18 Nov, 19:00 | **Cameras decided** (official only, the operator's embed or a link, never record; MEO BeachCam through its official embeds; Windy's API attributed; the YouTube flow); **provenance on every piece of information**; **bulletins** (text, audio, video summaries from our data) proposed, place and go open | `2026-11-18-cameras-provenance-and-bulletins.md` |
+| 23:45 (8 Nov) | **Three apps, three lines:** the event app (App Store, light, no new permission or attack surface), the team app (private data only there; tasks, feeds, where is everybody, the agents), the RiskMandate app (public, demos and videos, not in a store yet) | `2026-11-08-three-apps-three-lines.md`, https://web-summit.sgit.ai/apps/ |

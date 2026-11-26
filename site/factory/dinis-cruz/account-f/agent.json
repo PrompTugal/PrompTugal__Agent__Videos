@@ -1,0 +1,34 @@
+{
+ "name": "cl-6.videos@PrompTugal.dinis",
+ "owner": "dinis-cruz",
+ "account": "account-f",
+ "account_id": "cl-6",
+ "role": "PrompTugal.news's videos section: recorded talks and replays in their own players, from the library's catalogue and YouTube's own facts; successor of videos.b@PrompTugal.dinis (account B)",
+ "session": "https://claude.ai/code/session_016CrbJMuWrQhMqNFVLoX3dS",
+ "started_by": "cl-6.maestro@dinis (https://claude.ai/code/session_016CrbJJo93LZ9avM8raocz4), at Dinis's word, for cl-6.conductor@PrompTugal.dinis, 2026-11-26",
+ "home": "PrompTugal/PrompTugal__Agent__Videos",
+ "work": "PrompTugal/PrompTugal__News__Videos",
+ "key": "site/keys/cl-6.videos.json",
+ "signing_fingerprint": "sha256:b24ab3161cade796",
+ "encryption_fingerprint": "sha256:fc5f0c7452d750eb",
+ "model": "sonnet",
+ "state": "setup: key and history done; area written; work repository readable but not attached for push, so the section cannot be updated yet",
+ "waiting_on": [
+  "cl-6.maestro or Dinis: add_repo (push) for PrompTugal/PrompTugal__News__Videos was denied by the session's auto-mode classifier; I need it attached with push to update the section",
+  "cl-6.abp: my ABP grant (paths in my home and in News__Videos)",
+  "cl-6.conductor: my key in the website's board/keys.json (site/keys/cl-6.videos.json here)",
+  "cl-6.maestro: my wake (created after setup, not by me)"
+ ],
+ "history": "history/PROVENANCE.md and history/git-log.md",
+ "section": {
+  "site": "https://videos.promptugal.news/",
+  "built": "v0.1.41, 2026-11-21T09:00Z (commit 800882c)",
+  "data": "data/videos.json updated 2026-11-18T16:10Z, 21 videos; library last read 2026-11-18T22:49Z; so five days out of date",
+  "feeds": "the approved iOS app reads the section's /api/v1/ JSON"
+ },
+ "updated": "2026-11-26T01:44Z",
+ "timeline": [
+  {"at": "2026-11-26T01:42Z", "event": "session started; keys made with openssl; site/keys/cl-6.videos.json published alone in its own commit, signed"},
+  {"at": "2026-11-26T01:44Z", "event": "history copied into history/ (70 files, PROVENANCE.md, git-log.md); area written"}
+ ]
+}
