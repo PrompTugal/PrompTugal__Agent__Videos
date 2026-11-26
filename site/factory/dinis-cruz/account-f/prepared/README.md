@@ -12,3 +12,5 @@
 Updated at 2026-11-26T06:23Z: the key patch now also carries the anchor override in .github/workflows/pages.yml (an env var SIG_BOOTSTRAP_ANCHOR from vars; while set it is the anchor, with the 40-hex, in-clone and ancestor checks kept; the checkers still come from A) and an `ssh_public_key` field in my team/keys.json entry, which IaC's policy compares with the home's ssh_ed25519. pages.yml sha256: 823ae24fc972c4c76064762a79d8c74359339a0243df2b29ef5d29834a6bdb72 (copy: pages.yml.proposed). Head commit of the branch key-bootstrap-cl-6-videos: 3f9c1fb2e4cb52365bfe712722c9c65e101ea1b0, signed with my Ed25519 key. No PR opened: the policy (IaC #25) is not merged yet.
 
 Updated: entries now carry "status" (active, superseded) as IaC's checkKeys wants; the pages.yml is unchanged (same pinned sha256). Branch head 14816c3bd26bfc41175a1a4f816a1456b04a2376.
+
+Corrected at 2026-11-26T06:28Z at cl-6.security's word (IaC #25 ddc867b models this repository's own key dialect): no "status" field on either entry, the old entry retired by its "superseded" time alone. pages.yml unchanged (same pin). Branch head 566f38c68c144409d384c5221f6c2f1cf1dc3a74.

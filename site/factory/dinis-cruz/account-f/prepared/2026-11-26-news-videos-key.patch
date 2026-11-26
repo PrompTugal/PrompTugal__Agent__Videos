@@ -1,4 +1,4 @@
-From 14816c3bd26bfc41175a1a4f816a1456b04a2376 Mon Sep 17 00:00:00 2001
+From 566f38c68c144409d384c5221f6c2f1cf1dc3a74 Mon Sep 17 00:00:00 2001
 From: "cl-6.videos@PrompTugal.dinis" <noreply@anthropic.com>
 Date: Thu, 26 Nov 2026 02:38:29 +0000
 Subject: [PATCH] cl-6.videos@PrompTugal.dinis: add my commit-signing key
@@ -8,8 +8,8 @@ Agent: cl-6.videos@PrompTugal.dinis
 Claude-Session: https://claude.ai/code/session_016CrbJMuWrQhMqNFVLoX3dS
 ---
  .github/workflows/pages.yml | 15 +++++++++++++++
- team/keys.json              | 20 +++++++++++++++++++-
- 2 files changed, 34 insertions(+), 1 deletion(-)
+ team/keys.json              | 18 +++++++++++++++++-
+ 2 files changed, 32 insertions(+), 1 deletion(-)
 
 diff --git a/.github/workflows/pages.yml b/.github/workflows/pages.yml
 index 520e22f..79c70dc 100644
@@ -45,17 +45,16 @@ index 520e22f..79c70dc 100644
              # that concluded success; only GitHub Actions creates runs. Every field is checked, not only the query.
              local api="https://api.github.com/repos/$GITHUB_REPOSITORY" json sha
 diff --git a/team/keys.json b/team/keys.json
-index c677d9e..c3d49e6 100644
+index c677d9e..7dc6c3c 100644
 --- a/team/keys.json
 +++ b/team/keys.json
-@@ -13,7 +13,25 @@
+@@ -13,7 +13,23 @@
      ]
     },
     "added": "2026-11-19T13:53Z",
 -   "how": "Made with ssh-keygen (OpenSSH 9.6) in the agent's own cloud session on 19 Nov 2026; only its public half is here. It ends with the session: at hand-over its entry is removed."
 +   "how": "Made with ssh-keygen (OpenSSH 9.6) in the agent's own cloud session on 19 Nov 2026; only its public half is here. It ends with the session: at hand-over its entry is removed.",
-+   "superseded": "2026-11-26T02:38Z",
-+   "status": "superseded"
++   "superseded": "2026-11-26T02:38Z"
 +  },
 +  {
 +   "id": "cl-6-videos-git-1",
@@ -70,8 +69,7 @@ index c677d9e..c3d49e6 100644
 +   },
 +   "added": "2026-11-26T02:38Z",
 +   "how": "Made with ssh-keygen (OpenSSH 9.6) in the agent's own cloud session on 26 Nov 2026; only its public half is here. Also published in PrompTugal__Agent__Videos site/keys/cl-6.videos.json (ssh_ed25519). It ends with the session.",
-+   "ssh_public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhTzvwhsDadBAaeEploleCb5OQt7Zb6O4SYvSncyYX2",
-+   "status": "active"
++   "ssh_public_key": "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIhTzvwhsDadBAaeEploleCb5OQt7Zb6O4SYvSncyYX2"
    }
   ]
  }
