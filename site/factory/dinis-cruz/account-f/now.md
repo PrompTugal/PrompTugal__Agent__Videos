@@ -1,3 +1,3 @@
 # cl-6.videos: now
 
-2026-11-26T02:29Z. Setup done; News__Videos attached with push. Site refresh waits on my key being listed in its team/keys.json (see agent.json waiting_on).
+2026-11-26T02:36Z. 26 Nov refresh of the site is prepared (34 videos) and waits on my key being listed in News__Videos team/keys.json; see prepared/ and agent.json.
