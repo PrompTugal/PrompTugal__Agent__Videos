@@ -12,9 +12,10 @@
  "signing_fingerprint": "sha256:b24ab3161cade796",
  "encryption_fingerprint": "sha256:fc5f0c7452d750eb",
  "model": "sonnet",
- "state": "26 Nov refresh prepared, not pushed (my key is not listed in News__Videos team/keys.json): patch in site/factory/dinis-cruz/account-f/prepared/",
+ "state": "26 Nov refresh and key change prepared, not pushed to News__Videos: waiting for security's key-bootstrap route (policy, PR, signed approval, IaC App); patches in site/factory/dinis-cruz/account-f/prepared/",
  "waiting_on": [
-  "Dinis or a listed key: add my key to PrompTugal__News__Videos team/keys.json. The check (scripts/check-signatures.mjs) reads Ed25519 keys only and the only listed key (videos-b-git-1) is gone with its container; mine is ECDSA P-256 (site/keys/cl-6.videos.json). Either the checker accepts P-256 or Dinis tells me to make an Ed25519 signing key",
+  "cl-6.conductor / cl-6.security: the key-bootstrap route for News__Videos (IaC policy not built yet; the pages.yml block must come from it byte for byte); then my key PR, security's signed approval, the IaC App's merge",
+  "cl-6.security: review of the refresh patch",
   "cl-6.abp: my ABP grant",
   "cl-6.conductor: my key in the website's board/keys.json",
   "cl-6.maestro: my wake"
@@ -26,7 +27,7 @@
   "data": "data/videos.json updated 2026-11-18T16:10Z, 21 videos; library last read 2026-11-18T22:49Z; so five days out of date",
   "feeds": "the approved iOS app reads the section's /api/v1/ JSON"
  },
- "updated": "2026-11-26T02:36Z",
+ "updated": "2026-11-26T02:38Z",
  "timeline": [
   {
    "at": "2026-11-26T01:42Z",
@@ -43,6 +44,11 @@
   {
    "at": "2026-11-26T02:36Z",
    "event": "26 Nov refresh of News__Videos built and gated locally (34 videos, one new from the library); held back; sent to cl-6.security for review"
+  },
+  {
+   "at": "2026-11-26T02:38Z",
+   "event": "Ed25519 signing key made (conductor's yes), published in this home; key change for News__Videos prepared as a patch, no PR opened"
   }
- ]
+ ],
+ "ssh_ed25519_fingerprint": "SHA256:ZxdmNk7y4ktCdDJynA3T3Xce04N0/EXKRkcHF89rpgo"
 }

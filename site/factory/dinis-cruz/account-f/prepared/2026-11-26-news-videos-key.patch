@@ -1,0 +1,43 @@
+From a959c275e79bf6123d5776b276d99102098279c3 Mon Sep 17 00:00:00 2001
+From: "cl-6.videos@PrompTugal.dinis" <noreply@anthropic.com>
+Date: Thu, 26 Nov 2026 02:38:29 +0000
+Subject: [PATCH] cl-6.videos@PrompTugal.dinis: add my commit-signing key
+ (Ed25519), supersede videos.b@'s
+
+Agent: cl-6.videos@PrompTugal.dinis
+Claude-Session: https://claude.ai/code/session_016CrbJMuWrQhMqNFVLoX3dS
+---
+ team/keys.json | 17 ++++++++++++++++-
+ 1 file changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/team/keys.json b/team/keys.json
+index c677d9e..429c8b5 100644
+--- a/team/keys.json
++++ b/team/keys.json
+@@ -13,7 +13,22 @@
+     ]
+    },
+    "added": "2026-11-19T13:53Z",
+-   "how": "Made with ssh-keygen (OpenSSH 9.6) in the agent's own cloud session on 19 Nov 2026; only its public half is here. It ends with the session: at hand-over its entry is removed."
++   "how": "Made with ssh-keygen (OpenSSH 9.6) in the agent's own cloud session on 19 Nov 2026; only its public half is here. It ends with the session: at hand-over its entry is removed.",
++   "superseded": "2026-11-26T02:38Z"
++  },
++  {
++   "id": "cl-6-videos-git-1",
++   "agent": "cl-6.videos@PrompTugal.dinis",
++   "session": "https://claude.ai/code/session_016CrbJMuWrQhMqNFVLoX3dS",
++   "ssh": {
++    "format": "Ed25519, SPKI PEM (the check derives the OpenSSH form)",
++    "public_key_pem": "-----BEGIN PUBLIC KEY-----\nMCowBQYDK2VwAyEAiFPO/CGwNp0EBp4SmWiV4Jvk5C3tlvo7hJi9KdzJhfY=\n-----END PUBLIC KEY-----\n",
++    "principals": [
++     "cl-6.videos@PrompTugal.dinis"
++    ]
++   },
++   "added": "2026-11-26T02:38Z",
++   "how": "Made with ssh-keygen (OpenSSH 9.6) in the agent's own cloud session on 26 Nov 2026; only its public half is here. Also published in PrompTugal__Agent__Videos site/keys/cl-6.videos.json (ssh_ed25519). It ends with the session."
+   }
+  ]
+ }
+-- 
+2.43.0
+
