@@ -1,6 +1,6 @@
 --- a/scripts/release.sh	2026-11-26 01:42:09.331848512 +0000
-+++ b/scripts/release.sh	2026-11-27 02:43:14.587584139 +0000
-@@ -61,7 +61,27 @@
++++ b/scripts/release.sh	2026-11-27 02:44:36.645241729 +0000
+@@ -61,7 +61,30 @@
    trusted check-commits.mjs "$ANCHOR" HEAD >/dev/null
    trusted check-signatures.mjs "$ANCHOR" HEAD >/dev/null
    trusted check-links.mjs "$ANCHOR" "$(git rev-parse HEAD)" _site >/dev/null
@@ -10,9 +10,12 @@
 +  # fast-forwards dev when it passes. A tag gate/<agent>/<sha12>-fail means the gate refused the release.
 +  AGENT_NAME=${AGENT_NAME:-cl-6.videos}
 +  SHA=$(git rev-parse HEAD); SHA12=${SHA:0:12}
-+  if ! git -c push.negotiate=true push -q origin "HEAD:refs/heads/work/$AGENT_NAME"; then
-+    # work/<agent> is not a fast-forward (an earlier release is still there): wait and look again, never force
-+    echo "push to work/$AGENT_NAME refused (not a fast-forward?): waiting, then trying again" >&2
++  # The work branch is this agent's own and is rewritten after a rebase (IaC #35, settled by cl-6.infra): a lease on the exact
++  # commit seen on the remote, on refs/heads/work/<agent> only; dev is never pushed or forced here.
++  CUR=$(git ls-remote origin "refs/heads/work/$AGENT_NAME" | cut -f1)
++  if [ -n "$CUR" ]; then git fetch -q origin "refs/heads/work/$AGENT_NAME" 2>/dev/null || true; LEASE="--force-with-lease=refs/heads/work/$AGENT_NAME:$CUR"; else LEASE=""; fi
++  if ! git -c push.negotiate=true push -q $LEASE origin "HEAD:refs/heads/work/$AGENT_NAME"; then
++    echo "push to work/$AGENT_NAME refused: waiting, then trying again" >&2
 +    sleep $((i * 30)); continue
 +  fi
 +  echo "pushed $SHA12 to work/$AGENT_NAME; waiting for the gate (up to about 20 minutes)"
