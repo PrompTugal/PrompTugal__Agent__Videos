@@ -14,3 +14,7 @@ Updated at 2026-11-26T06:23Z: the key patch now also carries the anchor override
 Updated: entries now carry "status" (active, superseded) as IaC's checkKeys wants; the pages.yml is unchanged (same pinned sha256). Branch head 14816c3bd26bfc41175a1a4f816a1456b04a2376.
 
 Corrected at 2026-11-26T06:28Z at cl-6.security's word (IaC #25 ddc867b models this repository's own key dialect): no "status" field on either entry, the old entry retired by its "superseded" time alone. pages.yml unchanged (same pin). Branch head 566f38c68c144409d384c5221f6c2f1cf1dc3a74.
+
+## 2026-11-27T02:43Z: release.sh for the dev gate (IaC #35, P19), prepared, NOT in force
+
+`2026-11-27-news-videos-release-sh-dev-gate.patch` (against News__Videos origin/dev scripts/release.sh, 800882c): the final push to dev becomes a push to work/cl-6.videos, then every 90 s for up to about 21 minutes it reads `git ls-remote origin dev` (done when dev equals or contains my SHA) and the tag `gate/cl-6.videos/<sha12>-fail` (stop and report); if dev moves past me it goes round again after the loop's rebase. All gates before the push are unchanged. Open points for cl-6.security: (1) a plain push, never a force, so a work/cl-6.videos that is not a fast-forward makes the script wait and retry rather than overwrite; (2) the agent name is a variable defaulting to cl-6.videos. Not applied anywhere: the conductor says to change nothing until cl-6.abp's P19 is in force; scripts/** is a gate path, so cl-6.security must approve it.

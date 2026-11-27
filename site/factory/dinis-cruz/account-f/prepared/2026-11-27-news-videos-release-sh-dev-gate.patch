@@ -1,0 +1,33 @@
+--- a/scripts/release.sh	2026-11-26 01:42:09.331848512 +0000
++++ b/scripts/release.sh	2026-11-27 02:43:14.587584139 +0000
+@@ -61,7 +61,27 @@
+   trusted check-commits.mjs "$ANCHOR" HEAD >/dev/null
+   trusted check-signatures.mjs "$ANCHOR" HEAD >/dev/null
+   trusted check-links.mjs "$ANCHOR" "$(git rev-parse HEAD)" _site >/dev/null
+-  if git -c push.negotiate=true push -q origin HEAD:dev; then echo "released $(git rev-parse --short HEAD) to dev"; exit 0; fi
+-  sleep $((i * 3))
++  # With the dev gate on (IaC #35, P19): never push dev. Push the release commit to work/<agent>; IaC's App checks it and
++  # fast-forwards dev when it passes. A tag gate/<agent>/<sha12>-fail means the gate refused the release.
++  AGENT_NAME=${AGENT_NAME:-cl-6.videos}
++  SHA=$(git rev-parse HEAD); SHA12=${SHA:0:12}
++  if ! git -c push.negotiate=true push -q origin "HEAD:refs/heads/work/$AGENT_NAME"; then
++    # work/<agent> is not a fast-forward (an earlier release is still there): wait and look again, never force
++    echo "push to work/$AGENT_NAME refused (not a fast-forward?): waiting, then trying again" >&2
++    sleep $((i * 30)); continue
++  fi
++  echo "pushed $SHA12 to work/$AGENT_NAME; waiting for the gate (up to about 20 minutes)"
++  for w in $(seq 1 14); do
++    sleep 90
++    if git ls-remote --tags origin "gate/$AGENT_NAME/${SHA12}-fail" | grep -q .; then
++      echo "the gate refused $SHA12 (tag gate/$AGENT_NAME/${SHA12}-fail): stop and report" >&2; exit 1
++    fi
++    D=$(git ls-remote origin refs/heads/dev | cut -f1)
++    if [ "$D" = "$SHA" ]; then echo "released $SHA12 to dev"; exit 0; fi
++    if [ -n "$D" ] && [ "$D" != "$SHA" ] && ! git merge-base --is-ancestor "$SHA" "$D" 2>/dev/null; then
++      echo "dev moved to ${D:0:12} and does not contain $SHA12: rebasing and trying again" >&2; break
++    fi
++    [ -n "$D" ] && git merge-base --is-ancestor "$SHA" "$D" 2>/dev/null && { echo "released $SHA12 (dev is at ${D:0:12}, which contains it)"; exit 0; }
++  done
+ done
+-echo "release failed after 5 attempts" >&2; exit 1
++echo "release not confirmed after 5 attempts: check work/$AGENT_NAME and the gate's tags" >&2; exit 1
