@@ -1,5 +1,5 @@
 --- a/scripts/release.sh	2026-11-26 01:42:09.331848512 +0000
-+++ b/scripts/release.sh	2026-11-27 02:45:07.284379383 +0000
++++ b/scripts/release.sh	2026-11-27 02:46:16.291464199 +0000
 @@ -1,5 +1,5 @@
  #!/usr/bin/env bash
 -# Run every gate, then rebase on dev and push. Stops at the first failure. Never pipe a gate.
@@ -7,7 +7,7 @@
  set -euo pipefail
  cd "$(dirname "$0")/.."
  # Refuse during a hold (finding 3), with uncommitted changes (finding 4: the gates must check what is
-@@ -50,7 +50,12 @@
+@@ -50,7 +50,17 @@
  trusted check-links.mjs "$ANCHOR" "$(git rev-parse HEAD)" _site
  for i in 1 2 3 4 5; do
    git fetch -q origin dev
@@ -15,13 +15,18 @@
 +  # P19: no rebase and no force. When dev has moved, merge it into this branch (signed, with the two trailers) and push a plain
 +  # fast-forward to work/<agent>; a merge that is already up to date changes nothing.
 +  if ! git merge-base --is-ancestor origin/dev HEAD; then
-+    git merge -q --no-edit -m "${AGENT_NAME:-cl-6.videos}@PrompTugal.dinis: merge origin/dev into the release" -m "Agent: ${AGENT_NAME:-cl-6.videos}@PrompTugal.dinis
++    git merge -q --no-edit -m "cl-6.videos@PrompTugal.dinis: merge origin/dev into the release" -m "Agent: cl-6.videos@PrompTugal.dinis
 +Claude-Session: $(git log -1 --format=%B | sed -n 's/^Claude-Session: //p' | head -1)" origin/dev
++  fi
++  # An earlier release still on work/<agent> never goes away by waiting: merge it in too, so this push is a fast-forward.
++  if git fetch -q origin "refs/heads/work/cl-6.videos:refs/remotes/origin/work/cl-6.videos" 2>/dev/null && ! git merge-base --is-ancestor "origin/work/cl-6.videos" HEAD; then
++    git merge -q --no-edit -m "cl-6.videos@PrompTugal.dinis: merge work/cl-6.videos into the release" -m "Agent: cl-6.videos@PrompTugal.dinis
++Claude-Session: $(git log -1 --format=%B | sed -n 's/^Claude-Session: //p' | head -1)" "origin/work/cl-6.videos"
 +  fi
    # One gate per line: under set -e a failure inside an && chain does not stop the script (specialist.code@ finding 1).
    node scripts/build.mjs >/dev/null
    node scripts/validate.mjs >/dev/null
-@@ -61,7 +66,28 @@
+@@ -61,7 +71,28 @@
    trusted check-commits.mjs "$ANCHOR" HEAD >/dev/null
    trusted check-signatures.mjs "$ANCHOR" HEAD >/dev/null
    trusted check-links.mjs "$ANCHOR" "$(git rev-parse HEAD)" _site >/dev/null
@@ -29,7 +34,7 @@
 -  sleep $((i * 3))
 +  # With the dev gate on (IaC #35, P19): never push dev. Push the release commit to work/<agent>; IaC's App checks it and
 +  # fast-forwards dev when it passes. A tag gate/<agent>/<sha12>-fail means the gate refused the release.
-+  AGENT_NAME=${AGENT_NAME:-cl-6.videos}
++  AGENT_NAME=cl-6.videos   # hard-coded, never from the environment (cl-6.security, 27 Nov)
 +  SHA=$(git rev-parse HEAD); SHA12=${SHA:0:12}
 +  # Plain push to the agent's own work branch: never a force, never dev. A refused push (the branch holds something else) waits
 +  # and tries again after the next merge of dev.
@@ -40,7 +45,7 @@
 +  echo "pushed $SHA12 to work/$AGENT_NAME; waiting for the gate (up to about 20 minutes)"
 +  for w in $(seq 1 14); do
 +    sleep 90
-+    if git ls-remote --tags origin "gate/$AGENT_NAME/${SHA12}-fail" | grep -q .; then
++    if git ls-remote --tags origin "refs/tags/gate/$AGENT_NAME/${SHA12}-fail" | cut -f2 | grep -qx "refs/tags/gate/$AGENT_NAME/${SHA12}-fail"; then
 +      echo "the gate refused $SHA12 (tag gate/$AGENT_NAME/${SHA12}-fail): stop and report" >&2; exit 1
 +    fi
 +    D=$(git ls-remote origin refs/heads/dev | cut -f1)
