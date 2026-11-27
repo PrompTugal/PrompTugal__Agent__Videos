@@ -1,6 +1,27 @@
 --- a/scripts/release.sh	2026-11-26 01:42:09.331848512 +0000
-+++ b/scripts/release.sh	2026-11-27 02:44:36.645241729 +0000
-@@ -61,7 +61,30 @@
++++ b/scripts/release.sh	2026-11-27 02:45:07.284379383 +0000
+@@ -1,5 +1,5 @@
+ #!/usr/bin/env bash
+-# Run every gate, then rebase on dev and push. Stops at the first failure. Never pipe a gate.
++# Run every gate, then merge dev in and push work/<agent> (the dev gate lands it). Stops at the first failure. Never pipe a gate.
+ set -euo pipefail
+ cd "$(dirname "$0")/.."
+ # Refuse during a hold (finding 3), with uncommitted changes (finding 4: the gates must check what is
+@@ -50,7 +50,12 @@
+ trusted check-links.mjs "$ANCHOR" "$(git rev-parse HEAD)" _site
+ for i in 1 2 3 4 5; do
+   git fetch -q origin dev
+-  git rebase -q origin/dev
++  # P19: no rebase and no force. When dev has moved, merge it into this branch (signed, with the two trailers) and push a plain
++  # fast-forward to work/<agent>; a merge that is already up to date changes nothing.
++  if ! git merge-base --is-ancestor origin/dev HEAD; then
++    git merge -q --no-edit -m "${AGENT_NAME:-cl-6.videos}@PrompTugal.dinis: merge origin/dev into the release" -m "Agent: ${AGENT_NAME:-cl-6.videos}@PrompTugal.dinis
++Claude-Session: $(git log -1 --format=%B | sed -n 's/^Claude-Session: //p' | head -1)" origin/dev
++  fi
+   # One gate per line: under set -e a failure inside an && chain does not stop the script (specialist.code@ finding 1).
+   node scripts/build.mjs >/dev/null
+   node scripts/validate.mjs >/dev/null
+@@ -61,7 +66,28 @@
    trusted check-commits.mjs "$ANCHOR" HEAD >/dev/null
    trusted check-signatures.mjs "$ANCHOR" HEAD >/dev/null
    trusted check-links.mjs "$ANCHOR" "$(git rev-parse HEAD)" _site >/dev/null
@@ -10,11 +31,9 @@
 +  # fast-forwards dev when it passes. A tag gate/<agent>/<sha12>-fail means the gate refused the release.
 +  AGENT_NAME=${AGENT_NAME:-cl-6.videos}
 +  SHA=$(git rev-parse HEAD); SHA12=${SHA:0:12}
-+  # The work branch is this agent's own and is rewritten after a rebase (IaC #35, settled by cl-6.infra): a lease on the exact
-+  # commit seen on the remote, on refs/heads/work/<agent> only; dev is never pushed or forced here.
-+  CUR=$(git ls-remote origin "refs/heads/work/$AGENT_NAME" | cut -f1)
-+  if [ -n "$CUR" ]; then git fetch -q origin "refs/heads/work/$AGENT_NAME" 2>/dev/null || true; LEASE="--force-with-lease=refs/heads/work/$AGENT_NAME:$CUR"; else LEASE=""; fi
-+  if ! git -c push.negotiate=true push -q $LEASE origin "HEAD:refs/heads/work/$AGENT_NAME"; then
++  # Plain push to the agent's own work branch: never a force, never dev. A refused push (the branch holds something else) waits
++  # and tries again after the next merge of dev.
++  if ! git -c push.negotiate=true push -q origin "HEAD:refs/heads/work/$AGENT_NAME"; then
 +    echo "push to work/$AGENT_NAME refused: waiting, then trying again" >&2
 +    sleep $((i * 30)); continue
 +  fi
@@ -27,7 +46,7 @@
 +    D=$(git ls-remote origin refs/heads/dev | cut -f1)
 +    if [ "$D" = "$SHA" ]; then echo "released $SHA12 to dev"; exit 0; fi
 +    if [ -n "$D" ] && [ "$D" != "$SHA" ] && ! git merge-base --is-ancestor "$SHA" "$D" 2>/dev/null; then
-+      echo "dev moved to ${D:0:12} and does not contain $SHA12: rebasing and trying again" >&2; break
++      echo "dev moved to ${D:0:12} and does not contain $SHA12: merging it in and trying again" >&2; break
 +    fi
 +    [ -n "$D" ] && git merge-base --is-ancestor "$SHA" "$D" 2>/dev/null && { echo "released $SHA12 (dev is at ${D:0:12}, which contains it)"; exit 0; }
 +  done
